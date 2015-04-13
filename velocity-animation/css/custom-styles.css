@@ -21,12 +21,14 @@ body, html {
 	z-index:50;
 	box-shadow:10px 10px 20px #999999;
 	position:relative;
-	top:0;
 	width:50%;
 	margin:0 auto;
 	background:#ffffff;
 	padding:10px;
 	border-radius: 5px;
+}
+#myModal.slide {
+	top:0;
 }
 #myModal.fade {
 	top:50px;

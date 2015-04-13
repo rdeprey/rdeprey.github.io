@@ -43,7 +43,7 @@
             </div>
         </div>
         <script>
-            var modal = {
+            var modalSlide = {
                 config: {
                     wrapper: $('.open.slide').next(),
                     modal: $('.open.slide').next().find('#myModal.slide'),
@@ -51,19 +51,19 @@
 					cancel: $('#myModal.slide').find('.cancel')
                 },
                 showModal: function(config) {
-                    $.extend(modal.config, config);
-                    $(modal.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
-                    $(modal.config.modal).velocity(slideFromTop.e, slideFromTop.o);
-                    $(modal.config.save).click(modal.hideModal);
-					$(modal.config.cancel).click(modal.hideModal);
+                    $.extend(modalSlide.config, config);
+                    $(modalSlide.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
+                    $(modalSlide.config.modal).velocity(slideFromTop.e, slideFromTop.o);
+                    $(modalSlide.config.save).click(modalSlide.hideModal);
+					$(modalSlide.config.cancel).click(modalSlide.hideModal);
                 },
                 hideModal: function() {
-                    $(modal.config.modal).velocity('reverse');
-                    $(modal.config.wrapper).velocity('reverse', {display: 'none'});
+                    $(modalSlide.config.modal).velocity('reverse');
+                    $(modalSlide.config.wrapper).velocity('reverse', {display: 'none'});
                 }
             };
             
-            $('.open.slide').on('click',modal.showModal);
+            $('.open.slide').on('click',modalSlide.showModal);
         </script>
     </div>
     
@@ -79,7 +79,7 @@
             </div>
         </div>
         <script>
-            var modal = {
+            var modalFade = {
                 config: {
                     wrapper: $('.open.fade-effect').next(),
                     modal: $('.open.fade-effect').next().find('#myModal.fade'),
@@ -87,19 +87,19 @@
 					cancel: $('#myModal.fade').find('.cancel')
                 },
                 showModal: function(config) {
-                    $.extend(modal.config, config);
-                    $(modal.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
-                    $(modal.config.modal).velocity(fadeIn.e, fadeIn.o);
-                    $(modal.config.save).click(modal.hideModal);
-					$(modal.config.cancel).click(modal.hideModal);
+                    $.extend(modalFade.config, config);
+                    $(modalFade.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
+                    $(modalFade.config.modal).velocity(fadeIn.e, fadeIn.o);
+                    $(modalFade.config.save).click(modalFade.hideModal);
+					$(modalFade.config.cancel).click(modalFade.hideModal);
                 },
                 hideModal: function() {
-                    $(modal.config.modal).velocity('reverse');
-                    $(modal.config.wrapper).velocity('reverse', {display: 'none'});
+                    $(modalFade.config.modal).velocity('reverse');
+                    $(modalFade.config.wrapper).velocity('reverse', {display: 'none'});
                 }
             };
             
-            $('.open.fade-effect').click(modal.showModal);
+            $('.open.fade-effect').click(modalFade.showModal);
         </script>
     </div>
 </div>
