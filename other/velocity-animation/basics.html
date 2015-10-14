@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Velocity Basics</title>
+<link href="../js/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../js/lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/custom-styles.css" rel="stylesheet">
+<script src="../js/lib/jquery-1.11.2.min.js"></script>
+<script src="../js/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/lib/velocity.js"></script>
+<script src="js/styles.js"></script>
+</head>
+
+<body role="document">
+<div class="container" role="main">
+    <h1>Velocity Basics</h1>
+    <div class="row">
+        <h2>Change Opacity and Width</h2>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;opacity:0;">
+                <span class="sr-only">60% Complete</span>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('.progress-bar').velocity(progressComplete, {duration: 800, easing: 'swing'});
+            });
+        </script>
+    </div>
+    
+    <div class="row">
+        <h2>Modal Slide In/Out from Top</h2>
+        <button type="button" class="open slide btn btn-default">Show modal</button>
+        <div class="modal-wrapper">
+            <div class="modal-bg"></div>
+            <div id="myModal" class="slide">
+              <h1>Hello, World!</h1>
+              <button type="button" class="btn btn-primary save">Save</button>
+              <button type="button" class="btn btn-default cancel">Cancel</button>
+            </div>
+        </div>
+        <script>
+            var modalSlide = {
+                config: {
+                    wrapper: $('.open.slide').next(),
+                    modal: $('.open.slide').next().find('#myModal.slide'),
+                    save: $('#myModal.slide').find('.save'),
+					cancel: $('#myModal.slide').find('.cancel')
+                },
+                showModal: function(config) {
+                    $.extend(modalSlide.config, config);
+                    $(modalSlide.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
+                    $(modalSlide.config.modal).velocity(slideFromTop.e, slideFromTop.o);
+                    $(modalSlide.config.save).click(modalSlide.hideModal);
+					$(modalSlide.config.cancel).click(modalSlide.hideModal);
+                },
+                hideModal: function() {
+                    $(modalSlide.config.modal).velocity('reverse');
+                    $(modalSlide.config.wrapper).velocity('reverse', {display: 'none'});
+                }
+            };
+            
+            $('.open.slide').on('click',modalSlide.showModal);
+        </script>
+    </div>
+    
+    <div class="row">
+	    <h2>Modal Fade In/Out</h2>
+        <button type="button" class="open fade-effect btn btn-default">Show modal</button>
+        <div class="modal-wrapper">
+            <div class="modal-bg"></div>
+            <div id="myModal" class="fade">
+              <h1>Hello, World!</h1>
+              <button type="button" class="btn btn-primary save">Save</button>
+              <button type="button" class="btn btn-default cancel">Cancel</button>
+            </div>
+        </div>
+        <script>
+            var modalFade = {
+                config: {
+                    wrapper: $('.open.fade-effect').next(),
+                    modal: $('.open.fade-effect').next().find('#myModal.fade'),
+                    save: $('#myModal.fade').find('.save'),
+					cancel: $('#myModal.fade').find('.cancel')
+                },
+                showModal: function(config) {
+                    $.extend(modalFade.config, config);
+                    $(modalFade.config.wrapper).velocity(showOnScreen.e, showOnScreen.o);
+                    $(modalFade.config.modal).velocity(fadeIn.e, fadeIn.o);
+                    $(modalFade.config.save).click(modalFade.hideModal);
+					$(modalFade.config.cancel).click(modalFade.hideModal);
+                },
+                hideModal: function() {
+                    $(modalFade.config.modal).velocity('reverse');
+                    $(modalFade.config.wrapper).velocity('reverse', {display: 'none'});
+                }
+            };
+            
+            $('.open.fade-effect').click(modalFade.showModal);
+        </script>
+    </div>
+</div>
+</body>
+</html>

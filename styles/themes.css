@@ -1,0 +1,70 @@
+* {
+	margin: 0;
+	padding: 0;
+	}
+body {
+	min-width: 100%;
+	background-color: #FFFFFF;
+	}
+header {
+	min-width: 100%;
+}
+header h1 {
+	padding: 5px;
+	text-align: center;
+	color: #66CCFC; /* Color from the powerpoints */
+}
+
+#map {
+	margin-top: -5%;
+}
+
+#basic {
+	max-width:80%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.hover-icon {
+	width:30px;
+	padding:10px 10px 0 0;
+}
+.hoverinfo {
+	width:300px;
+	padding:10px 15px 10px!important;
+}
+
+/* Sidebar styles */
+.sidebar {
+/*	display: none;*/
+	width: 100%;
+	height:900px;
+}
+
+/* Legend unresponsive in datamaps js */
+@media (max-width:599px){
+	.datamaps-legend {
+		display: none;
+	}
+}
+
+@media (min-width:600px){
+
+	.datamaps-legend {
+		float: right;
+		display: block;
+		position:relative;
+		width: 200px;
+		height: auto;
+		margin-top: 60%;
+		color: #4F4F4F;
+	}
+}
+
+footer {
+	min-width: 100%;
+	color: #66CCFC;
+	background-color: #4F4F4F; /* Color from the powerpoints */
+}
+footer p {
+	text-align: center;
+}
