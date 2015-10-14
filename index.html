@@ -2,7 +2,6 @@
 <html ng-app="childLaborMap">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv='x-dns-prefetch-control' content='on'>
 <title>Untitled Document</title>
 <link rel="stylesheet" type="text/css" href="styles/normalize.css" media="all">
 <link rel="stylesheet" type="text/css" href="styles/themes.css" media="all">
@@ -96,7 +95,7 @@
 						var goodsIcons = '';
 						if (numberGoods > 0) {
 							for (var l in selectedKey.goods) {
-								goodsIcons = goodsIcons + '<img rel="dns-prefetch" src="' + selectedKey.goods[l].icon + '" class="hover-icon" />';
+								goodsIcons = goodsIcons + '<img src="' + selectedKey.goods[l].icon.toLowerCase() + '" class="hover-icon" />';
 							}
 						} else {
 							goodsIcons = '<p><strong>There is no data available about goods produced.</strong></p>';
