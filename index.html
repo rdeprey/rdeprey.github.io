@@ -11,8 +11,23 @@
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="scripts/topojson.min.js"></script>
 <script src="scripts/datamaps.world.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 	d3.json("data/countries_2013.json", function(error, countries2013) {
+
+		// Associate the fill colors with each ISO3 code
+		var fullData;
+		var getFillKeys = function(countries2013) {
+			fullData = countries2013;
+
+			for (var item in fullData) {
+				var country = countries2013[item].ISO3;
+
+				fullData[country] = {};
+				fullData[country].fillKey = countries2013[item].Advancement_Level;
+			}
+		};
+		getFillKeys(countries2013);
 
 		// sets up the map
 		var basic = new Datamap({
@@ -21,22 +36,23 @@
 		  projection: 'mercator',
 		  responsive: true,
 		  fills: { // colors used to highlight countries based on their advancement level
-				'Significant Advancement': '#ABDDA4',
-				'Moderate Advancement': '#c8dda4',
-				'Minimal Advancement': '#ECE671',
-				'No Advancement': '#DC9595',
-				'No Assessment': '#DDDDDD',
-				defaultFill: '#DDDDDD'
+			'Significant Advancement': '#ABDDA4',
+			'Moderate Advancement': '#c8dda4',
+			'Minimal Advancement': '#ECE671',
+			'No Advancement': '#DC9595',
+			'No Assessment': '#DDDDDD',
+			defaultFill: '#DDDDDD'
 		  },
-		  data: countries2013, // set the map's data to our data object
+		  data: fullData, // set the map's data to our data object
 		  geographyConfig: {
 				popupTemplate: function(data) {
 					var countrySelected = data.id;  // get the data.id for the country hovered over
 					var selectedKey = '';
 
-					for (var j in countries2013) {
-						if (countries2013[j].ISO3 === countrySelected) {
-							selectedKey = countries2013[j];
+
+					for (var j in fullData) {
+						if (fullData[j].ISO3 === countrySelected) {
+							selectedKey = fullData[j];
 						}
 					}
 
@@ -75,50 +91,9 @@
 			basic.resize();
 		});
 
-		//creates an object with the iso2 country name and an array with the Advancement Level and the "number" which is a placeholder for Goods
-		// var countries = {};
-						
-		// var getCountries = function(countries2013) {
-		// 	for (var item in countries2013) {
-		// 		// create the ISO3 key
-		// 		var country = countries2013[item].ISO3;
-
-		// 		// create an object for each country under it's ISO3
-		// 		countries[country] = {};
-
-		// 		// get the name of each country to display on hover
-		// 		countries[country] = {'iso': countries2013[item].ISO3, 'name': countries2013[item].Name};
-
-
-		// 		if (countries2013[item].Advancement_Level && countries2013[item].Advancement_Level !== '') {
-		// 			// get the fillKey value for each country to change it's color based on the advancement level
-		// 			countries[country].fillKey = countries2013[item].Advancement_Level;
-
-		// 			// get the advancement level for each country
-		// 			countries[country].advancementLevel = countries2013[item].Advancement_Level;
-		// 		}
-
-		// 		countries[country].goods = [];
-
-		// 		for (var k in countries2013[item].Goods) {
-		// 			if (countries2013[item].Goods && countries2013[item].Goods.length > 0) {
-						
-		// 				// get the information for each good and store it as an object within the goods array
-		// 				var good = {};
-
-		// 				good = {'name': countries2013[item].Goods[k].Good_Name,
-		// 						'good-sector': countries2013[item].Goods[k].Good_Sector,
-		// 						'child-labor': countries2013[item].Goods[k].Child_Labor,
-		// 						'forced-labor': countries2013[item].Goods[k].Forced_Labor,
-		// 						'forced-child-labor': countries2013[item].Goods[k].Forced_Child_Labor,
-		// 						'icon': 'design/icon-sets/' + countries2013[item].Goods[k].Good_Name + '.png'};
-		// 				countries[country].goods.push(good);
-		// 			}
-		// 		}
-		// 	}
-		// };
-		// getCountries(countries2013);
-
+		$('path').click(function() {
+			console.log(this);
+		});
 		
 	});
 
