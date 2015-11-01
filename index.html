@@ -5,120 +5,63 @@
 <title>Untitled Document</title>
 <link rel="stylesheet" type="text/css" href="styles/normalize.css" media="all">
 <link rel="stylesheet" type="text/css" href="styles/themes.css" media="all">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
-<script src="scripts/controllers.js"></script>
-<script src="scripts/factories.js"></script> -->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="scripts/topojson.min.js"></script>
-<script src="scripts/datamaps.world.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
-	d3.json("data/countries_2013.json", function(error, countries2013) {
 
-		// Associate the fill colors with each ISO3 code
-		var fullData;
-		var getFillKeys = function(countries2013) {
-			fullData = countries2013;
+		d3.csv("angular-seed/data/UNHCR-Refugees-By-Accommodation-Type.csv", function(error, data) {
+			// setup the map
+			var map = L.map('map').setView([51.505, -0.09], 3);
 
-			for (var item in fullData) {
-				var country = countries2013[item].ISO3;
-
-				fullData[country] = {};
-				fullData[country].fillKey = countries2013[item].Advancement_Level;
-			}
-		};
-		getFillKeys(countries2013);
-
-		// sets up the map
-		var basic = new Datamap({
-		  element: document.getElementById("basic"),
-		  scope: 'world',
-		  projection: 'mercator',
-		  responsive: true,
-		  fills: { // colors used to highlight countries based on their advancement level
-			'Significant Advancement': '#ABDDA4',
-			'Moderate Advancement': '#c8dda4',
-			'Minimal Advancement': '#ECE671',
-			'No Advancement': '#DC9595',
-			'No Assessment': '#DDDDDD',
-			defaultFill: '#DDDDDD'
-		  },
-		  data: fullData, // set the map's data to our data object
-		  geographyConfig: {
-				popupTemplate: function(data) {
-					var countrySelected = data.id;  // get the data.id for the country hovered over
-					var selectedKey = '';
+			L.tileLayer('https://api.tiles.mapbox.com/v4/rdeprey.nnkh2lia/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmRlcHJleSIsImEiOiJjaWZ1ZTYwMjUxdnA5dGZtMTBiYTAzaGZrIn0.Ke3x2K5bOHdEOXYz2rwa-A', {
+	    		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			    maxZoom: 18,
+			    id: 'rdeprey.nnkh2lia',
+			    accessToken: 'pk.eyJ1IjoicmRlcHJleSIsImEiOiJjaWZ1ZTYwMjUxdnA5dGZtMTBiYTAzaGZrIn0.Ke3x2K5bOHdEOXYz2rwa-A'
+			}).addTo(map);
 
 
-					for (var j in fullData) {
-						if (fullData[j].ISO3 === countrySelected) {
-							selectedKey = fullData[j];
-						}
-					}
+			// Add markers to the map
+			for (var i in data) {
+				var marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+				marker.bindPopup(data[i].Country);
 
-					if (selectedKey !== '') {
-						var numberGoods; // Number of goods if greater than 0
-						if (selectedKey.Goods && selectedKey.Goods.length > 0) {
-							numberGoods = selectedKey.Goods.length;
-						} else {
-							numberGoods = 0;
-						}
+			// function getColor(d) {
+			// 	return d > 16000 ? "#800026" :
+			// 		   d > 50000 ? "#bd0026" :
+			// 		   			   "#ffeda0";
+			// }
 
-						var goodsNames = '';  // Goods names for now
-						var goodsIcons = '';
-						if (numberGoods > 0) {
-							for (var l in selectedKey.Goods) {
-								goodsIcons = goodsIcons + '<img src="design/icon-sets/' + selectedKey.Goods[l].Good_Name.toLowerCase() + '.png" class="hover-icon" />';
-							}
-						} else {
-							goodsIcons = '<p><strong>There is no data available about goods produced.</strong></p>';
-						}
+			// function style(feature) {
+			// 	return {
+			// 		fillColor: getColor(data[i].Total),
+			// 		weight:2,
+			// 		opacity:1,
+			// 		color:'white',
+			// 		dashArray: '3',
+			// 		fillOpacity: 0.7
+			// 	}
+			// }
 
+			// L.geoJson(data, {style: style}).addTo(map);
 
-						return '<div class="hoverinfo"><h2>' + selectedKey.Name + '</h2><br />' + goodsIcons + '</div>';
-					} else {
-						return '<div class="hoverinfo"><h2>' + data.properties.name + '</h2><p><strong>No Assessment</strong></p></div>';
-					}
-				}
-		  	}
+		}
+
 		});
-
-		// display the legend
-		basic.legend();
-
-		// resizes the map as the window is resized
-		d3.select(window).on('resize', function() {
-			basic.resize();
-		});
-
-		$('path').click(function() {
-			console.log(this);
-		});
-		
-	});
-
 
 </script>
 </head>
 <body>
 	<header>
-		<h1>Visualizing Forced Labor and Child Labor</h1> <!-- Working title -->
+		<h1>Visualizing Refugee Data</h1> <!-- Working title -->
 	</header>
 	<div id="map" style="height:890px;">
-		<div id="basic"></div>
+		
 	</div>
-	<!-- <div class="sidebar" ng-controller="countryDetailCtrl">
-	<script type="text/javascript">
-		console.log("test");
-	</script>
-		<ul>
-			<li ng-repeat="item in country">
-				{{ item.name }}
-			</li>
-		</ul>
-	</div> -->
 	<footer>
-		<p><small>Data from the <a href="http://www.dol.gov">Department of Labor's</a> <a href="http://www.dol.gov/ilab/">Bureau of International Labor Affairs (ILAB)</a>    <a href="../data/countries2013.json">Download This Data</a><small></p>
+
 	</footer>
 </body>
 </html>
