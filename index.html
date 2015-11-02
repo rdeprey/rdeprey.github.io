@@ -23,35 +23,33 @@
 			    accessToken: 'pk.eyJ1IjoicmRlcHJleSIsImEiOiJjaWZ1ZTYwMjUxdnA5dGZtMTBiYTAzaGZrIn0.Ke3x2K5bOHdEOXYz2rwa-A'
 			}).addTo(map);
 
-			// Add the country outlines to the map
-			var geojson;
-			geojson = L.geoJson(countryData).addTo(map);
-
 
 			// Add markers to the map
 			for (var i in data) {
-				// var marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
-				// marker.bindPopup(data[i].Country);
+				var marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+				marker.bindPopup(data[i].Country);
 
 
-			function getColor(d) {
-				return d > 16000 ? '#800026' :
-					   d > 50000 ? '#bd0026' :
-					   			   '#ffeda0';
-			}
+			// function getColor(d) {
+			// 	return d > 16000 ? '#800026' :
+			// 		   d > 50000 ? '#bd0026' :
+			// 		   			   '#ffeda0';
+			// }
 
-			function style(data) {
-				return {
-					fillColor: getColor(data[i].Total),
-					weight:2,
-					opacity:1,
-					color:'white',
-					dashArray: '3',
-					fillOpacity: 0.7
-				};
-			}
+			// function style(data) {
+			// 	return {
+			// 		fillColor: getColor(data[i].Total),
+			// 		weight:2,
+			// 		opacity:1,
+			// 		color:'white',
+			// 		dashArray: '3',
+			// 		fillOpacity: 0.7
+			// 	};
+			// }
 
-			L.geoJson(countryData, {style: style}).addTo(map);
+			// // Add the country outlines to the map
+			// var geojson;
+			// geojson = L.geoJson(countryData, {style: style}).addTo(map);
 
 		}
 
