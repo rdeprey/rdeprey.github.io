@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My First 3D Game with Three.js</title>
+<link href="css/first-3d-game/styles.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body onload="setup();">
+	<div id="gameCanvas"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"></script>
+    <script src="js/lib/keyboard.js"></script>
+    <script src="js/modules/first-3d-game/game.js"></script>
+    <div id="scoreboard">
+    	<h1 id="scores">0-0</h1>
+        <h1 id="title">3D Pong</h1>
+        <h2 id="winnerBoard">First to 7 wins!</h2>
+        <h3>A - move left<br />D - move right</h3>
+    </div>
+</body>
+</html>
