@@ -9,6 +9,7 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="angular-seed/data/subunits.json"></script>
 <script type="text/javascript">
 
 		d3.csv("angular-seed/data/UNHCR-Refugees-By-Accommodation-Type.csv", function(error, data) {
@@ -22,30 +23,35 @@
 			    accessToken: 'pk.eyJ1IjoicmRlcHJleSIsImEiOiJjaWZ1ZTYwMjUxdnA5dGZtMTBiYTAzaGZrIn0.Ke3x2K5bOHdEOXYz2rwa-A'
 			}).addTo(map);
 
+			// Add the country outlines to the map
+			var geojson;
+			geojson = L.geoJson(countryData).addTo(map);
+
 
 			// Add markers to the map
 			for (var i in data) {
-				var marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
-				marker.bindPopup(data[i].Country);
+				// var marker = L.marker([data[i].Latitude, data[i].Longitude]).addTo(map);
+				// marker.bindPopup(data[i].Country);
 
-			// function getColor(d) {
-			// 	return d > 16000 ? "#800026" :
-			// 		   d > 50000 ? "#bd0026" :
-			// 		   			   "#ffeda0";
-			// }
 
-			// function style(feature) {
-			// 	return {
-			// 		fillColor: getColor(data[i].Total),
-			// 		weight:2,
-			// 		opacity:1,
-			// 		color:'white',
-			// 		dashArray: '3',
-			// 		fillOpacity: 0.7
-			// 	}
-			// }
+			function getColor(d) {
+				return d > 16000 ? '#800026' :
+					   d > 50000 ? '#bd0026' :
+					   			   '#ffeda0';
+			}
 
-			// L.geoJson(data, {style: style}).addTo(map);
+			function style(data) {
+				return {
+					fillColor: getColor(data[i].Total),
+					weight:2,
+					opacity:1,
+					color:'white',
+					dashArray: '3',
+					fillOpacity: 0.7
+				};
+			}
+
+			L.geoJson(countryData, {style: style}).addTo(map);
 
 		}
 
