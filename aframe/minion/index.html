@@ -5,7 +5,9 @@
   <body>
     <a-scene>
       <a-sky color="#ECECEC"></a-sky>
-      <a-entity camera="userHeight: 1.6" look-controls></a-entity>
+      <a-entity position="0 1.8 5">
+        <a-entity camera look-controls></a-entity>
+      </a-entity>
       <a-assets>
         <a-asset-item id="minion-obj" src="minion.obj"></a-asset-item>
         <a-asset-item id="minion-mtl" src="minion.mtl"></a-asset-item>
